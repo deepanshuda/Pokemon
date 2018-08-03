@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
             String jsonString = "";
             try {
                 // TODO: make a request to the URL
+                URL requestUrl = createUrl(url);
+                jsonString = sh.makeHttpRequest(requestUrl);
 
             } catch (IOException e) {
                 return null;
@@ -73,14 +75,18 @@ public class MainActivity extends AppCompatActivity {
             if (jsonString != null) {
                 try {
                     //TODO: Create a new JSONObject
+                    JSONObject responseObj = new JSONObject(jsonString);
 
                     // TODO: Get the JSON Array node and name it "pokemons"
-
+                    JSONArray pokemons = responseObj.getJSONArray("pokemon");
 
                     // looping through all Contacts
                     for (int i = 0; i < pokemons.length(); i++) {
                         //TODO: get the JSONObject and its three attributes
-
+                        JSONObject pokemonObj = pokemons.getJSONObject(i);
+                        String name = pokemonObj.getString("name");
+                        String id = pokemonObj.getString("id");
+                        String candy = pokemonObj.getString("candy");
 
                         // tmp hash map for a single pokemon
                         HashMap<String, String> pokemon = new HashMap<>();
